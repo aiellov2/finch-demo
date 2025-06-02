@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -31,7 +32,8 @@ abstract class Robot {
     private static final String LOGO_DOWN = "Logo%20Down";
     private static final String SHAKE = "Shake";
 
-    private String outputError = "Error: Could not set output on the device ";
+    // FIXED WARNING: not needed
+    // private String outputError = "Error: Could not set output on the device ";
 	private String inputError = "Error: Could not read sensor on the device ";
 	
 	protected boolean[] displayStatus = new boolean[25];
@@ -105,7 +107,8 @@ abstract class Robot {
         long requestStartTime = System.currentTimeMillis();
 	    String responseString = "Not Connected";
         try {
-            requestUrl = new URL(URLRequest);
+            // requestUrl = new URL(URLRequest);
+            requestUrl = URI.create(URLRequest).toURL();
             connection = (HttpURLConnection) requestUrl.openConnection();
             connection.setRequestMethod("GET");
             //connection.setDoOutput(true);
@@ -147,7 +150,8 @@ abstract class Robot {
 	/* This function sends http requests that set outputs (lights, motors, buzzer, 
 	 * etc.) on the micro:bit and Hummingbird. */
     protected void httpRequestOut(String URLRequest) {
-        String response = sendHttpRequest(URLRequest);
+        // FIXED WARNING: no variable
+        sendHttpRequest(URLRequest);
     }
     
     /* This function sends http requests that return a double response from a sensor. */
