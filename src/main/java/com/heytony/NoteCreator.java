@@ -8,11 +8,21 @@ import java.util.ArrayList;
 public class NoteCreator {
     private static ArrayList<String> midiMap = readFile("midi_to_musical_notes.txt");
 
+    /**
+     * Returns an integer array reprenting the given major chord and octave
+     * @param rootNote the base note of the chord
+     * @return an integer array of length 4 of the given major chord
+     */
     public static int[] getMajorChord(String rootNote) {
         int note = findNote(rootNote);
         return new int[] {note, note + 4, note + 7, note + 12};
     }
 
+    /**
+     * Returns an integer array reprenting the given minor chord and octave
+     * @param rootNote the base note of the chord
+     * @return an integer array of length 4 of the given minor chord
+     */
     public static int[] getMinorChord(String rootNote) {
         int note = findNote(rootNote);
         return new int[] {note, note + 3, note + 7, note + 12};
