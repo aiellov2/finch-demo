@@ -10,20 +10,26 @@ public class FinalFinch {
 
         Scanner input = new Scanner(System.in);
 
-        // collects user input word to diplay on display screen
-        System.out.print("Type a word: ");
-        String word = input.nextLine();
-        String[] letters = word.split("");
+        System.out.print("What chord do you want to play?: ");
+        String rootNote = input.nextLine();
+        System.out.print("Major or Minor?: ");
+        String chordType = input.nextLine();
 
-        for (String l : letters) {
-            int[] array = PatternCreator.getPatternForSymbol(l);
-            bird.setDisplay(array);
-            bird.pause(1);
+        if (chordType.toLowerCase().equals("major")) {
+            for (int note : NoteCreator.getMajorChord(rootNote)) {
+                bird.playNote(note, 16);
+                bird.pause(0.5);
+            }
+        } else if (chordType.toLowerCase().equals("minor")) {
+            for (int note : NoteCreator.getMinorChord(rootNote)) {
+                bird.playNote(note, 16);
+                bird.pause(0.5);
+            }
+        } else {
+            System.out.println("Sorry, not a valid option. Run this program again.");
         }
 
-
         input.close();
-        
         bird.stopAll();
         bird.disconnect();
     }

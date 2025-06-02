@@ -7,36 +7,55 @@ import java.util.ArrayList;
 
 public class NoteCreator {
     private static ArrayList<String> midiMap = readFile("midi_to_musical_notes.txt");
-    private static ArrayList<String> chordMap = readFile("chord_mapping.txt");
 
-    public static void main(String[] args) {
-        
+    public static int[] getMajorChord(String rootNote) {
+        int note = findNote(rootNote);
+        return new int[] {note, note + 4, note + 7, note + 12};
     }
 
-    public int findNote(String note) {
-        return findNote(note, "mid");
+    public static int[] getMinorChord(String rootNote) {
+        int note = findNote(rootNote);
+        return new int[] {note, note + 3, note + 7, note + 12};
     }
 
-    public int findNote(String note, String register) {
+    /**
+     * Returns the int for the given note around middle C
+     * @param note the string letter of the note (use # and b for sharp and flat) 
+     * @return the int value of the note
+     */
+    public static int findNote(String note) {
+        return findNote(note, 60);
+    }
+
+    /**
+     * Returns the int for the given note provided a lower bound
+     * @param note the string letter of the note (use # and b for sharp and flat)
+     * @param range the lowest int value for the given note
+     * @return the int value of the note
+     */
+    public static int findNote(String note, int range) {
         ArrayList<Integer> notes = new ArrayList<Integer>();
-
         for (String line : midiMap) {
             String[] splitLine = line.split(" ");
             if (splitLine[1].indexOf(note) != -1) {
                 notes.add(Integer.parseInt(splitLine[0]));
             }
         }
+        return findFirstNote(notes, range);
+    }
 
-        if (register.toLowerCase().equals("low")) {
-
-        } else if (register.toLowerCase().equals("mid")) {
-
-        } else if (register.toLowerCase().equals("high")) {
-
-        } else {
-
+    /**
+     * Finds the first note in the given range
+     * @param notes all ints of the same musical note
+     * @param range lower bound of musical note
+     * @return the int representing the musical note
+     */
+    private static int findFirstNote(ArrayList<Integer> notes, int range) {
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i) >= range) {
+                return notes.get(i);
+            }
         }
-
         return -1;
     }
 
